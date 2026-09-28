@@ -1,0 +1,50 @@
+appId: com.apple.mobilesafari
+---
+- launchApp
+- waitForAnimationToEnd:
+    timeout: 5000
+- tapOn:
+    point: "50%,88%"
+- waitForAnimationToEnd:
+    timeout: 3000
+- runFlow:
+    when:
+      visible: "Continuar"
+    commands:
+      - tapOn: "Continuar"
+      - waitForAnimationToEnd
+- runFlow:
+    when:
+      visible: "Continuar"
+    commands:
+      - tapOn: "Continuar"
+      - waitForAnimationToEnd
+- inputText: "apple.com"
+- pressKey: Enter
+- waitForAnimationToEnd:
+    timeout: 6000
+- runFlow:
+    when:
+      visible: "Continuar"
+    commands:
+      - tapOn: "Continuar"
+      - waitForAnimationToEnd
+- takeScreenshot: warm_typed
+- openLink: https://app.lenguasol.net
+- extendedWaitUntil:
+    visible: "Entrar.*"
+    timeout: 60000
+- tapOn:
+    id: "ShareButton"
+- extendedWaitUntil:
+    visible: "Copiar|Añadir a la lista de lectura|Mensajes|Mail"
+    timeout: 90000
+- takeScreenshot: warm_sheet
+- swipe:
+    direction: DOWN
+- waitForAnimationToEnd
+- openLink: https://www.apple.com
+- waitForAnimationToEnd:
+    timeout: 8000
+- takeScreenshot: warm_end
+- stopApp

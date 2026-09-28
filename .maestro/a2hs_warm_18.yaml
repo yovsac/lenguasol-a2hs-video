@@ -1,0 +1,20 @@
+appId: com.apple.mobilesafari
+---
+- launchApp
+- openLink: https://app.lenguasol.net
+- extendedWaitUntil:
+    visible: "Entrar.*"
+    timeout: 60000
+- tapOn:
+    id: "ShareButton"
+- extendedWaitUntil:
+    visible: "Copy|Add to Reading List|Messages|Mail"
+    timeout: 90000
+- takeScreenshot: warm_sheet
+- swipe:
+    direction: DOWN
+- waitForAnimationToEnd
+- openLink: https://www.apple.com
+- waitForAnimationToEnd:
+    timeout: 8000
+- stopApp
