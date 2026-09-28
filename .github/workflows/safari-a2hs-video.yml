@@ -11,7 +11,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        ios: ["18", "18es"]
+        ios: ["18es"]
     steps:
       - uses: actions/checkout@v4
       - name: List runtimes
@@ -41,12 +41,14 @@ jobs:
           export PATH="$PATH:$HOME/.maestro/bin"
           maestro --device "$UDID" test --test-output-dir out/warm .maestro/a2hs_warm_${{ matrix.ios }}.yaml || (sleep 15; maestro --device "$UDID" test --test-output-dir out/warm2 .maestro/a2hs_warm_${{ matrix.ios }}.yaml) || echo "WARM_FAILED" > out/warm_failed.txt
       - name: Record the flow
+        env:
+          VIDEO_PIN: ${{ secrets.VIDEO_PIN }}
         run: |
           export PATH="$PATH:$HOME/.maestro/bin"
           xcrun simctl io "$UDID" recordVideo --codec=h264 --force out/a2hs_raw.mp4 &
           REC=$!
           sleep 3
-          maestro --device "$UDID" test --test-output-dir out/rec .maestro/a2hs_rec_${{ matrix.ios }}.yaml || echo "MAESTRO_FAILED" > out/maestro_failed.txt
+          maestro --device "$UDID" test -e PIN="$VIDEO_PIN" --test-output-dir out/rec .maestro/a2hs_rec_${{ matrix.ios }}.yaml || echo "MAESTRO_FAILED" > out/maestro_failed.txt
           sleep 3
           kill -INT $REC; wait $REC || true
           xcrun simctl io "$UDID" screenshot out/final.png
@@ -56,5 +58,7 @@ jobs:
         if: always()
         with:
           name: a2hs-video-ios${{ matrix.ios }}
-          path: out
+          path: |
+            out/*.mp4
+            out/**/*.png
           retention-days: 14

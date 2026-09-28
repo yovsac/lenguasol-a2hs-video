@@ -71,3 +71,44 @@ appId: com.apple.mobilesafari
 - waitForAnimationToEnd:
     timeout: 3000
 - takeScreenshot: r_app
+# --- log in (video-only demo account) and switch on notifications
+- tapOn: "tu móvil o usuario"
+- waitForAnimationToEnd:
+    timeout: 1500
+- inputText: "video"
+- tapOn:
+    point: "50%,46%"
+- waitForAnimationToEnd:
+    timeout: 1000
+- inputText: ${PIN}
+- hideKeyboard
+- waitForAnimationToEnd:
+    timeout: 1500
+- takeScreenshot: r_login
+- tapOn: "Entrar.*"
+- extendedWaitUntil:
+    visible: "Chats"
+    timeout: 30000
+- waitForAnimationToEnd:
+    timeout: 2500
+- takeScreenshot: r_chats
+- tapOn: "Menú"
+- waitForAnimationToEnd:
+    timeout: 2000
+- takeScreenshot: r_menu
+- tapOn: "Notificaciones"
+- waitForAnimationToEnd:
+    timeout: 3000
+- takeScreenshot: r_prompt
+- tapOn:
+    text: "Permitir"
+    optional: true
+- waitForAnimationToEnd:
+    timeout: 4000
+- takeScreenshot: r_after
+- tapOn:
+    text: "Menú"
+    optional: true
+- waitForAnimationToEnd:
+    timeout: 3000
+- takeScreenshot: r_menu2
