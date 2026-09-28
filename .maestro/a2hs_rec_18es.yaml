@@ -81,7 +81,9 @@ appId: com.apple.mobilesafari
 - waitForAnimationToEnd:
     timeout: 1000
 - inputText: ${PIN}
-- hideKeyboard
+- tapOn:
+    text: "OK"
+    optional: true
 - waitForAnimationToEnd:
     timeout: 1500
 - takeScreenshot: r_login
